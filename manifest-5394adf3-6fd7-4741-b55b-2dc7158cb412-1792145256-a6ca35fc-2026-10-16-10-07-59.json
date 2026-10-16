@@ -1,0 +1,50 @@
+{
+  "instructions": "Download each file using the export_url. Each link expires 24 hours after it is created and may stop working before then once it has been used, so download each file completely when you open its link.",
+  "created_at": "2026-10-16T10:07:59.519997+00:00",
+  "total_files": 6,
+  "data_files": [
+    {
+      "batch_index": 0,
+      "export_url": "https://claude.ai/export/5394adf3-6fd7-4741-b55b-2dc7158cb412/download/aaa85d55f461422017c43e1d5651b9c9",
+      "category": "light_metadata",
+      "part": 0,
+      "filename": "light_metadata-000.zip"
+    },
+    {
+      "batch_index": 1,
+      "export_url": "https://claude.ai/export/5394adf3-6fd7-4741-b55b-2dc7158cb412/download/38b35301d85ac3dfa7e2a6814ad65322",
+      "category": "projects",
+      "part": 0,
+      "filename": "projects-000.zip"
+    },
+    {
+      "batch_index": 2,
+      "export_url": "https://claude.ai/export/5394adf3-6fd7-4741-b55b-2dc7158cb412/download/14c4ac9b22553792cd5c5aea82b361ef",
+      "category": "memories",
+      "part": 0,
+      "filename": "memories-000.zip"
+    },
+    {
+      "batch_index": 3,
+      "export_url": "https://claude.ai/export/5394adf3-6fd7-4741-b55b-2dc7158cb412/download/73829aa70de3832b2cd7c76c295efeb6",
+      "category": "frames",
+      "part": 0,
+      "filename": "frames-000.zip"
+    },
+    {
+      "batch_index": 4,
+      "export_url": "https://claude.ai/export/5394adf3-6fd7-4741-b55b-2dc7158cb412/download/941ff150b0c9524b75b60dbfa71c5d40",
+      "category": "claude_code_cloud",
+      "part": 0,
+      "filename": "claude_code_cloud-000.zip"
+    },
+    {
+      "batch_index": 5,
+      "export_url": "https://claude.ai/export/5394adf3-6fd7-4741-b55b-2dc7158cb412/download/09f0565582b7b9a7e1cc574dbeb7de8b",
+      "category": "conversations",
+      "part": 0,
+      "filename": "conversations-000.zip"
+    }
+  ],
+  "version": "1.0"
+}
