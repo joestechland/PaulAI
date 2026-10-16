@@ -1,58 +1,58 @@
-# Paul — Vision and Scope
+# PaulAI — Vision and Scope
 
 Oct 16, 2026 · @Joe D G · Draft v0.1
 
 ## Purpose
 
-Paul gives a single user one front end to ChatGPT, Gemini, and Claude, capturing every prompt and response, importing history from those tools, and enabling search and inference across that combined history, solving the problem that no individual AI can see across a user's conversations, projects, and providers.
+PaulAI gives a single user one front end to ChatGPT and Claude, capturing every prompt and response, importing history from those tools, and enabling search and inference across that combined history, solving the problem that no individual AI can see across a user's conversations, projects, and providers.
 
-Paul is named for an old friend: insightful, with an excellent memory, and funny.
+PaulAI is named for an old friend: insightful, with an excellent memory, and funny.
 
 ## Problem and context
 
 Each AI tool keeps its own history in silos. ChatGPT cannot see across its own projects and conversations, and no tool can see across providers.
 
-- Decisions, ideas, and advice are scattered across many conversations and three providers.
+- Decisions, ideas, and advice are scattered across many conversations and two providers.
 - There is no way to ask questions of that history as a whole, such as what was decided about a topic, or where providers disagreed.
 - Consumer chat apps cannot be captured live; their history is reachable only through periodic exports.
 
 ## Scope
 
-Release 1 is a single-user app covering live chat, capture, import, search, and inference across ChatGPT, Gemini, and Claude.
+Release 1 is a single-user app covering live chat, capture, import, search, and inference across ChatGPT and Claude.
 
 **In scope**
 
 - One user; no multi-user accounts or sharing
-- Live chat with ChatGPT, Gemini, and Claude through their application programming interfaces (APIs)
+- Live chat with ChatGPT and Claude through their application programming interfaces (APIs)
 - Capture of every prompt and response, with metadata and the raw payload
 - Import of existing history from each provider's export
 - Keyword and semantic search across all history
 - Inferential queries across conversations, projects, and providers, with cited sources
-- Paul's persona: a consistent voice that draws on relevant history
+- PaulAI's persona: a consistent voice that draws on relevant history
 - Token and cost tracking per provider
 
 **Out of scope for release 1**
 
 - Multi-user support
-- Providers beyond the three named
+- Providers beyond the two named, including Gemini (a candidate for the O8 extensibility test)
 - Live capture of consumer chat apps (web or mobile); these come in only by import
 - Images, audio, and file attachments, beyond recording that they existed (open question)
 - Mobile app; access is through the web front end
 
 ## Objectives
 
-Nine objectives, in priority order; inference (O5) is the reason Paul exists and the hardest to verify.
+Nine objectives, in priority order; inference (O5) is the reason PaulAI exists and the hardest to verify.
 
 | # | Objective | Success criterion |
 | --- | --- | --- |
-| O1 | Unified front end: chat with all three providers from one interface | Text chat with streaming works for ChatGPT, Gemini, and Claude |
+| O1 | Unified front end: chat with both providers from one interface | Text chat with streaming works for ChatGPT and Claude |
 | O2 | Complete capture of every prompt and response, with metadata and raw payload | Zero lost exchanges, verified by periodic reconciliation |
-| O3 | History import from all three providers | All exported conversations imported; re-import creates no duplicates |
+| O3 | History import from both providers | All exported conversations imported; re-import creates no duplicates |
 | O4 | Keyword and semantic search across all history | Relevant result in the top 5 for a test query set, in under 2 seconds |
 | O5 | Inference across conversations, projects, and providers | At least 80% correct on ~20 real test questions; every answer cites its source conversations |
 | O6 | Privacy and security: data under the user's control | No plaintext API keys; history stored locally or encrypted |
 | O7 | Cost visibility: tokens and cost per provider | Monthly totals within 5% of provider bills |
-| O8 | Extensibility: new providers by adapter or configuration | A fourth provider added without changing core code |
+| O8 | Extensibility: new providers by adapter or configuration | A third provider (such as Gemini) added without changing core code |
 | O9 | Persona: consistent voice, insightful and funny, drawing on history | User's subjective review |
 
 Persona is ranked last so the name does not drive priority.
@@ -63,8 +63,8 @@ External formats and APIs are fixed inputs; part of the data model is dictated b
 
 **Constraints**
 
-- Provider APIs and export formats are controlled by OpenAI, Google, and Anthropic and may change without notice.
-- ChatGPT and Claude exports are JSON (JavaScript Object Notation). Gemini history comes through Google Takeout and is likely less structured; its contents must be verified early.
+- Provider APIs and export formats are controlled by OpenAI and Anthropic and may change without notice.
+- ChatGPT and Claude exports are JSON (JavaScript Object Notation). Both formats must be verified when the exports arrive.
 - Open-source components only; no Oracle or other licensed stack.
 - Single developer, using Claude as a collaborator.
 
@@ -79,16 +79,16 @@ External formats and APIs are fixed inputs; part of the data model is dictated b
 
 ## Candidate architecture and technology
 
-Paul is a layered proxy: every provider, store, and model sits behind an adapter (ports and adapters, or hexagonal, pattern), so each can be swapped without changing the core.
+PaulAI is a layered proxy: every provider, store, and model sits behind an adapter (ports and adapters, or hexagonal, pattern), so each can be swapped without changing the core.
 
 > *Diagram (candidate architecture: 3 layers, adapters at the edges) lives in the [live doc](https://claude.ai/artifact/M2B4mw9h4YEd4EryhRKvNn).*
 
-The query and inference engine is the core of Paul; it combines SQL (Structured Query Language), vector search, and large language model (LLM) reasoning. Raw provider payloads are stored alongside the normalized form so no provider-specific data is lost.
+The query and inference engine is the core of PaulAI; it combines SQL (Structured Query Language), vector search, and large language model (LLM) reasoning. Raw provider payloads are stored alongside the normalized form so no provider-specific data is lost.
 
 **Candidate technology (working assumptions, to be confirmed by the architecturally significant use cases)**
 
 - Back end: Java (decided; chosen for the developer's decades of Java experience, so generated code can be reviewed fluently)
-- Provider layer: Spring AI or LangChain4j, to be evaluated; both support OpenAI, Gemini, Anthropic, embeddings, and pgvector (no custom provider abstraction)
+- Provider layer: Spring AI or LangChain4j, to be evaluated; both support OpenAI, Anthropic, embeddings, and pgvector (no custom provider abstraction)
 - Storage: PostgreSQL with the pgvector extension; a graph store only if the inference prototype shows a need
 - Deployment: Docker, hosted locally
 - Front end: web; framework open
@@ -99,9 +99,8 @@ The biggest risk is building a good logger that cannot answer the questions that
 
 | Risk | Impact | Mitigation |
 | --- | --- | --- |
-| Inference quality falls short of O5 | Paul's core value fails | Time-boxed inference prototype (spike) during analysis, tested against the ~20 real questions |
+| Inference quality falls short of O5 | PaulAI's core value fails | Time-boxed inference prototype (spike) during analysis, tested against the ~20 real questions |
 | Data model cannot support inference | Costly rework after design | Prototype inference before locking the data model |
-| Gemini export is thin or unstructured | Incomplete history for one provider | Request exports now; inspect before modeling |
 | Provider APIs or export formats change | Capture or import breaks | Isolate each provider behind an adapter; store raw payloads |
 | Leaky AI abstraction loses provider-specific data | Lost tool use, reasoning, or attachments | Store raw request and response alongside the normalized form |
 | Persona work expands scope | Delays core objectives | Persona ranked last (O9) |
@@ -113,12 +112,12 @@ The biggest risk is building a good logger that cannot answer the questions that
 
 - What exactly counts as an "inferential query"? Needs a precise definition in the glossary.
 - Are attachments (images, files) in scope beyond recording that they existed?
-- Which machine hosts Paul, and is remote access needed away from home?
+- Which machine hosts PaulAI, and is remote access needed away from home?
 - How often are consumer-app histories re-imported?
 
 **Next steps**
 
-- [ ] Request ChatGPT, Claude, and Gemini (Google Takeout) exports
+- [ ] Request ChatGPT and Claude exports
 - [ ] Write ~20 real questions to ask of the combined history
 - [ ] Draft a glossary of key terms
 - [ ] Define use cases and identify the architecturally significant ones
